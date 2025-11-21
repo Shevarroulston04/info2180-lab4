@@ -6,8 +6,19 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Superhero Information Hub</h1>
-    <button id="search">Search</button>
+
+    <div class="header">
+        <h1>Superhero Information Hub</h1>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Enter superhero name or alias...">
+        <button id="searchBtn">Search</button>
+    </div>
+
+    <h2 id="result-title" style="display:none;">Results</h2>
+
+    <div id="result"></div>
 
     <script src="app.js"></script>
 </body>

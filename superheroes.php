@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
 
 $superheroes = [
   [
@@ -63,10 +64,36 @@ $superheroes = [
   ], 
 ];
 
-?>
+$query = filter_input(INPUT_GET, 'query', FILTER_SANITIZE_STRING);
+$query = trim((string)$query);
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+function safe($s) {
+    return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+if ($query !== "") {
+    $found = false;
+    foreach ($superheroes as $superhero) {
+        if (strcasecmp($superhero['name'], $query) === 0 ||
+            strcasecmp($superhero['alias'], $query) === 0) {
+
+            echo "<h3>" . safe($superhero['alias']) . "</h3>";
+            echo "<h4>" . safe($superhero['name']) . "</h4>";
+            echo "<p>"  . safe($superhero['biography']) . "</p>";
+            $found = true;
+            break;
+        }
+    }
+
+    if (!$found) {
+        echo "<p class='error'>Superhero not found</p>";
+    }
+
+} else {
+    echo "<ul>";
+    foreach ($superheroes as $superhero) {
+        echo "<li>" . safe($superhero['alias']) . "</li>";
+    }
+    echo "</ul>";
+}
+?>
